@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>JAMS — Just Another Music Studio</title>
+        <!-- <script src="http://use.edgefonts.net/source-sans-pro;source-code-pro.js"></script> -->
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic|Source+Code+Pro:300,400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../assets/css/bootstrap.css">
+<link rel="stylesheet" href="../assets/css/jquery.bonsai.css">
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/icons.css">
+<script type="text/javascript" src="../assets/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="../assets/js/bootstrap.js"></script>
+<script type="text/javascript" src="../assets/js/jquery.bonsai.js"></script>
+<!-- <script type="text/javascript" src="../assets/js/main.js"></script> -->
+
+    </head>
+    <body>
+        <div>
+
+            <!-- Name Title -->
+
+            <h1>JAMS — Just Another Music Studio</h1>
+
+            <!-- Type and Stereotype -->
+
+            <section style="margin-top: .5em;">
+                <span class="alert alert-info">
+                    <span class="node-icon _icon-Project"></span>
+                    Project
+                </span>
+                
+            </section>
+
+            <!-- Path -->
+
+            <section style="margin-top: 10px">
+                
+                
+                
+                    
+                    <span class="label label-info"><a href='caf2a2eb677eaec2abd97f9bb4e8e528.html'><span class='node-icon _icon-Project'></span>JAMS — Just Another Music Studio</a></span>
+                
+            </section>
+
+            <!-- Diagram -->
+
+            
+
+            <!-- Description -->
+
+            
+            <section>
+                <h3>Description</h3>
+                <div>
+                    
+                        <h2>Présentation</h2>
+
+<h3>Présentation du projet</h3>
+
+<p><strong>JAMS</strong> (Just Another Music Studio) est une application web qui permet de composer de la musique en ligne et de la partager entre amis.</p>
+
+<p>L’utilisateur désireux de profiter des fonctionnalités de <strong>JAMS</strong> doit s’enregistrer dans l’application, il devient alors un <em>Jammer</em>.
+Dans son studio, l&#39;environnement de création musicale, le Jammer gère ses <em>sessions</em> qui sont autant de compositions musicales. Il a la possibilité de les créer, les supprimer, les modifier.</p>
+
+<h4>Session</h4>
+
+<p>Un <em>session</em> est une structure comprenant une collection d’<em>instruments</em>, le <em>Jammer</em> les choisit parmi une liste. Il a la possibilité d’en ajouter des nouveaux.<br/>La <em>session</em> possède aussi un type musical (rock, pop, reggae, electronica, …), ainsi qu’un tempo.</p>
+
+<p>Le fonctionnement de la <em>session</em> est similaire à celui d’un séquenceur. Quand un <em>Jammer</em> choisit un nouvel <em>instrument</em> pour sa <em>session</em>, une nouvelle piste sonore (<em>track</em>) correspondant à l’<em>instrument</em> est ajoutée à la <em>session</em>. Dans la <em>track</em>, le <em>Jammer</em> a alors la possibilité de jouer de son <em>instrument</em> en posant des événements (<em>trackEvent</em>) sur la grille temporelle de la <em>session</em> comme on ajoute des notes sur une portée. </p>
+
+<p>La <em>session</em> comprend un ensemble de commandes de transport (play, stop, rewind, …). La lecture est cyclique, la grille temporelle correspond à un ensemble de 16 doubles croches (c’est-à-dire 4 noires) qui est répété à l’infini avant que la commande stop ne soit déclenchée.<br/>Le <em>Jammer</em> dispose de 4 registres permettant de stocker différents ensembles de notes permettant l’enchaînement des motifs.<br/>Pour rendre dynamique la lecture, le <em>Jammer</em> a la possibilité d’automatiser des traitements sonores (reverb ,chorus, delay, …) sur les <em>instruments</em>.</p>
+
+<h4>Live session</h4>
+
+<p>Pour augmenter d’avantage son expérience de création musicale, le <em>Jammer</em> peut inviter des membres à jammer avec lui en partageant une <em>session</em>. La <em>session</em> devient une <em>session live</em>.<br/>Le <em>Jammer</em> invité a alors accès à cette <em>session live</em>, il peut y ajouter de nouveaux instruments et participer ainsi à la composition musicale.<br/>Un espace de discussion disponible dans la <em>session</em> permet aux <em>Jammers</em> participants de communiquer entre eux. Les commandes de transport deviennent communes et la lecture se fait synchrone pour tous les participants.</p>
+
+<h4>TrackEvent</h4>
+
+<p>Un <em>trackEvent</em> possède comme propriétés la note de musique associée et la durée relative au tempo (en fraction de noires).</p>
+
+<h4>Instrument</h4>
+
+<p>Un <em>instrument</em> est une structure comprenant un ensemble d’échantillons sonores (<em>samples</em>) mappés chacun sur une gamme de notes. Ainsi quand le <em>Jammer</em> pose un évènement sonore (<em>trackEvent</em>) sur la grille, cela déclenche la lecture de l’échantillon correspondant.
+En standard le <em>Jammer</em> a à sa disposition une liste d’instruments prédéfinis. Mais il peut en proposer d’autres. L’administrateur de l’application vérifie alors la bonne conformité de l’<em>instrument</em> avant de le valider.</p>
+
+<h4>Public Session</h4>
+
+<p>Le <em>Jammer</em> peut partager une composition musicale avec le monde en la déclarant publique. <br/>Dès lors la <em>session</em> est accessible en lecture seule par n’importe quel internaute anonyme qui peut utiliser les commandes de transport.</p>
+
+<h3>Situation actuelle</h3>
+
+<p>Il existe des applications web de type séquenceurs en ligne (https://onlinesequencer.net/) mais la plus-value de l’application est la possibilité d’interaction avec la <em>session live</em>.</p>
+
+<h3>Contraintes</h3>
+
+<p>Les contraintes sont d’ordre technique, lors d’une <em>session live</em> les communications entre <em>Jammers</em> doivent pouvoir s’effectuer de manière bilatérale que ce soit l’espace de discussion ou la lecture synchrone. Une solution technique de type WebSocket s’impose.</p>
+                    
+                </div>
+            </section>
+            
+
+            <!-- Specification -->
+
+            
+
+            <!-- Directed Relationship -->
+
+            
+
+            <!-- Undirected Relationship -->
+
+            
+
+            <!-- Classifier -->
+
+            
+
+            <!-- Interface -->
+
+            
+
+            <!-- Component -->
+
+            
+
+            <!-- Node -->
+
+            
+
+            <!-- Actor -->
+
+            
+
+            <!-- Use Case -->
+
+            
+
+            <!-- Template Parameters -->
+
+            
+
+            <!-- Literals -->
+
+            
+
+            <!-- Attributes -->
+
+            
+
+            <!-- Operations -->
+
+            
+
+            <!-- Receptions -->
+
+            
+
+            <!-- Extension Points -->
+
+            
+
+            <!-- Parameters -->
+
+            
+
+            <!-- Diagrams -->
+
+            
+            
+
+            <!-- Behavior -->
+
+            
+
+            <!-- Action -->
+
+            
+
+            <!-- Interaction -->
+
+            
+
+            <!-- CombinedFragment -->
+
+            
+
+            <!-- Activity -->
+
+            
+
+            <!-- State Machine -->
+
+            
+
+            <!-- State Machine -->
+
+            
+
+            <!-- State -->
+
+            
+
+            <!-- Vertex -->
+
+            
+
+            <!-- Transition -->
+
+            
+
+            <!-- Properties -->
+
+            <section>
+                <h3>Properties</h3>
+                
+                <table class="table table-striped table-bordered">
+    <tr>
+        <th width="50%">Name</th>
+        <th width="50%">Value</th>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>name</td>
+        <td>JAMS — Just Another Music Studio</td>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>author</td>
+        <td>Guillaume Limberger</td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>company</td>
+        <td></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>copyright</td>
+        <td></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>version</td>
+        <td>1.5</td>
+    </tr>
+    
+    
+    
+</table>                
+
+            </section>
+
+            <!-- Tags -->
+
+            
+
+            <!-- Constraints, Dependencies, Dependants -->
+
+            
+
+            <!-- Relationships -->
+
+            
+            
+
+
+            <!-- Owned Elements -->
+
+            
+            
+<section class="element-list">
+    <h3>Owned Elements</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='b6f249c7fc3126e939e6b59c6df9cccb.html'><span class='node-icon _icon-UMLModel'></span>Use Case Model</a></li>
+        
+        <li><a href='d3a1a058756cf3c156e6e2fa64a0486a.html'><span class='node-icon _icon-UMLModel'></span>Analysis Model</a></li>
+        
+        <li><a href='24f437938feb571928bc29a94f1e7127.html'><span class='node-icon _icon-UMLModel'></span>Design Model</a></li>
+        
+        <li><a href='f4b92ffba7fec7a081ce820af4f82225.html'><span class='node-icon _icon-UMLModel'></span>Component View</a></li>
+        
+        <li><a href='1ecbb683a54024e7d91516d49ec6d4d4.html'><span class='node-icon _icon-UMLModel'></span>Deployment View</a></li>
+        
+        <li><a href='9d82ccc19ccf15cdd72cc1c8ab7f03f3.html'><span class='node-icon _icon-UMLProfile'></span>UMLStandardProfile</a></li>
+        
+    </ul>
+</section>
+
+
+
+        </div>
+    </body>
+</html>
