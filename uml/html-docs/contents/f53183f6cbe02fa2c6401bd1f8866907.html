@@ -47,7 +47,7 @@
                     <span class="label label-info"><a href='24f437938feb571928bc29a94f1e7127.html'><span class='node-icon _icon-UMLModel'></span>Design Model</a></span>
                 
                     <span>::</span>
-                    <span class="label label-info"><a href='aed79f2512fd2b01f4e7a0e1f9dbde52.html'><span class='node-icon _icon-UMLPackage'></span>Controller</a></span>
+                    <span class="label label-info"><a href='7125d6df6ca788e879ad500b0690d8c1.html'><span class='node-icon _icon-UMLPackage'></span>Back-side Presentation</a></span>
                 
                     <span>::</span>
                     <span class="label label-info"><a href='f53183f6cbe02fa2c6401bd1f8866907.html'><span class='node-icon _icon-UMLClass'></span>«boundary»SessionController</a></span>
@@ -153,13 +153,43 @@
                     
                     <tr>
                         <td>public</td>
-                        <td><a href="508be46b226268ee599fdba787663823.html">newAction()</a></td>
+                        <td><a href="508be46b226268ee599fdba787663823.html">postSessionAction(request: Request)</a></td>
                         <td></td>
                     </tr>
                     
                     <tr>
                         <td>public</td>
-                        <td><a href="8d684f40e60fbf5f799d76d8e4ff9a0d.html">updateAction()</a></td>
+                        <td><a href="7b93a15d7b5b5c10ccff19666acd4b15.html">getSessionAction(request: Request)</a></td>
+                        <td></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>public</td>
+                        <td><a href="77c08a968e81e63f35302b9ba1bf68d8.html">getSessionsAction(request: Request)</a></td>
+                        <td></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>public</td>
+                        <td><a href="33493d17170d9eba99be6262170ad406.html">postTrackAction(request: Request)</a></td>
+                        <td></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>public</td>
+                        <td><a href="3332c96e7a85e88d281ab385899facdf.html">createForm(dto: SessionDTO)</a></td>
+                        <td></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>public</td>
+                        <td><a href="5beebb05a5617fcd019465cb77cf8c48.html">createSearchForm(dto: SessionSearchDTO)</a></td>
+                        <td></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>public</td>
+                        <td><a href="f5011053e482957f3ab8008efdbe6800.html">renderToJson(domainObject: object)</a></td>
                         <td></td>
                     </tr>
                     
@@ -335,6 +365,17 @@
 
                 
                 
+<section class="element-list">
+    <h3>Dependencies</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='a84dbcb16860efe25508ef13a52389f0.html'><span class='node-icon _icon-UMLClass'></span>SessionForm</a></li>
+        
+        <li><a href='b8aae4e830d9c9bb2f5c628dbf27cae2.html'><span class='node-icon _icon-UMLClass'></span>SessionSearchForm</a></li>
+        
+    </ul>
+</section>
+
 
 
                 
@@ -346,12 +387,54 @@
 
             
             
+<section class="element-list">
+    <h3>Relationships</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='dd807005b8c2f1e4dee296a6f1d44fb5.html'><span class='node-icon _icon-UMLAssociation'></span>(SessionController—SessionCreationHandler)</a></li>
+        
+        <li><a href='85d5e5557af01decd0c5b9ba5f1b33d7.html'><span class='node-icon _icon-UMLDependency'></span>(SessionController→SessionForm)</a></li>
+        
+        <li><a href='24feab45f758b1802b8cd5959d8e0936.html'><span class='node-icon _icon-UMLAssociation'></span>(SessionController—Serializer)</a></li>
+        
+        <li><a href='17b4920ab395c568d8b02e263b44810b.html'><span class='node-icon _icon-UMLAssociation'></span>(SessionController—SessionSearchHandler)</a></li>
+        
+        <li><a href='3caf136ddbf21b90c4b7316be605f9c3.html'><span class='node-icon _icon-UMLAssociation'></span>(SessionController—SessionTrackHandler)</a></li>
+        
+        <li><a href='769ebf6e0be91551cb7f6fcbe3f5ea57.html'><span class='node-icon _icon-UMLDependency'></span>(SessionController→SessionSearchForm)</a></li>
+        
+        <li><a href='431ccd78701528cfa56cbf072945649b.html'><span class='node-icon _icon-UMLAssociation'></span>(SessionController—SessionManager)</a></li>
+        
+    </ul>
+</section>
+
 
 
             <!-- Owned Elements -->
 
             
             
+<section class="element-list">
+    <h3>Owned Elements</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='dd807005b8c2f1e4dee296a6f1d44fb5.html'><span class='node-icon _icon-UMLAssociation'></span>(SessionController—SessionCreationHandler)</a></li>
+        
+        <li><a href='85d5e5557af01decd0c5b9ba5f1b33d7.html'><span class='node-icon _icon-UMLDependency'></span>(SessionController→SessionForm)</a></li>
+        
+        <li><a href='24feab45f758b1802b8cd5959d8e0936.html'><span class='node-icon _icon-UMLAssociation'></span>(SessionController—Serializer)</a></li>
+        
+        <li><a href='17b4920ab395c568d8b02e263b44810b.html'><span class='node-icon _icon-UMLAssociation'></span>(SessionController—SessionSearchHandler)</a></li>
+        
+        <li><a href='3caf136ddbf21b90c4b7316be605f9c3.html'><span class='node-icon _icon-UMLAssociation'></span>(SessionController—SessionTrackHandler)</a></li>
+        
+        <li><a href='769ebf6e0be91551cb7f6fcbe3f5ea57.html'><span class='node-icon _icon-UMLDependency'></span>(SessionController→SessionSearchForm)</a></li>
+        
+        <li><a href='431ccd78701528cfa56cbf072945649b.html'><span class='node-icon _icon-UMLAssociation'></span>(SessionController—SessionManager)</a></li>
+        
+    </ul>
+</section>
+
 
 
         </div>
