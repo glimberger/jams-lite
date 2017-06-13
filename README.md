@@ -1,2 +1,4 @@
-# jams-lite
-Just another music studio — Lite version
+# JAMS #
+## Just another music studio — Lite version ##
+
+
