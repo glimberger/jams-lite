@@ -1,0 +1,63 @@
+FROM php:7.1.6-apache
+
+LABEL maintainer "Guillaume Limberger <glim.dev@gmail.com>"
+
+COPY ./docker/back/php.ini /usr/local/etc/php/
+
+RUN apt-get update && apt-get install -y \
+	apt-utils \
+	git \
+	unzip \
+	vim
+
+RUN git --version
+
+ENV APCU_VERSION 5.1.8
+
+RUN set -xe
+    # intl extension
+    && apt-get install -y libicu-dev \
+    && docker-php-ext-install intl \
+    # opcache extension
+    && docker-php-ext-install opcache \
+    # pdo extensions
+    && docker-php-ext-install pdo_mysql \
+    # APCu
+    && pecl install apcu-${APCU_VERSION} \
+	&& docker-php-ext-enable apcu \
+    # Xdebug
+    && pecl install xdebug \
+	&& docker-php-ext-enable xdebug
+
+# Composer
+COPY ./docker/back/install-composer.sh /usr/local/bin/docker-app-install-composer
+RUN set -xe
+    && chmod +x /usr/local/bin/docker-app-install-composer \
+    && docker-app-install-composer \
+    && mv composer.phar /usr/local/bin/composer
+
+
+# Install composer cache
+RUN set -xe \
+    && chown -R www-data: /var/www \
+    && mkdir -p /var/www/.composer \
+    && chown -R www-data: /var/www/.composer \
+    && mkdir -p /root/.composer \
+    && chown -R www-data: /root/.composer
+
+# https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
+RUN composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress --no-suggest --optimize-autoloader --classmap-authoritative
+
+RUN composer install --prefer-dist --optimize-autoloader --classmap-authoritative --no-progress --no-suggest
+
+# Install PHPUnit
+RUN set -xe \
+    && curl -LsS https://phar.phpunit.de/phpunit.phar -o /usr/local/bin/phpunit \
+	&& chmod a+x /usr/local/bin/phpunit \
+	&& phpunit --version
+
+# Apache
+# Enable rewrite module
+RUN a2enmod rewrite
