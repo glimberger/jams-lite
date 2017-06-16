@@ -40,6 +40,10 @@ db: vendor
 	$(RUN) $(CONSOLE) doctrine:migrations:migrate -n
 	$(RUN) $(CONSOLE) doctrine:fixtures:load -n
 
+db-status:      ## Display the status of migrations
+db-status:
+	$(RUN) $(CONSOLE) doctrine:migration:status
+
 db-diff:        ## Generate a migration by comparing your current database to your mapping information
 db-diff: vendor
 	$(RUN) $(CONSOLE) doctrine:migration:diff
