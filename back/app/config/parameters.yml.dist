@@ -1,14 +1,13 @@
-# This file is a "template" of what your parameters.yml file should look like
-# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
-# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
-    database_host: db
-    database_port: 3306
-    database_name: api_platform
-    database_user: api_platform
-    database_password: api_platform
-    # You should uncomment this if you want use pdo_sqlite
-    # database_path: '%kernel.project_dir%/data.db3'
+    database_host:          db
+    database_port:          '%env(MYSQL_PORT)%'
+    env(MYSQL_PORT):        3306
+    database_name:          '%env(SF_DB_NAME)%'
+    env(SF_DB_NAME):        api
+    database_user:          '%env(SF_DB_USER)%'
+    env(SF_DB_USER):        admin
+    database_password:      '%env(SF_DB_PWD)%'
+    env(SF_DB_PWD):         admin
 
     mailer_transport: smtp
     mailer_host: 127.0.0.1
