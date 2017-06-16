@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 // This check prevents access to debug front controllers that are deployed by accident to production servers.
 // Feel free to remove this, extend it, or make something more sophisticated.
-$whiteListedAddresses = ['127.0.0.1', 'fe80::1', '::1'];
+$whiteListedAddresses = ['127.0.0.1', 'fe80::1', '::1', '172.22.0.1'];
 if (isset($_SERVER['DOCKER_BRIDGE_IP'])) {
     $whiteListedAddresses[] = $_SERVER['DOCKER_BRIDGE_IP'];
 }
