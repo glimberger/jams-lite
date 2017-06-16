@@ -2,26 +2,30 @@ FROM php:7.1.6-apache
 
 LABEL maintainer "Guillaume Limberger <glim.dev@gmail.com>"
 
-COPY ./docker/back/php.ini /usr/local/etc/php/
+COPY ./php.ini /usr/local/etc/php/
 
 RUN apt-get update && apt-get install -y \
 	apt-utils \
 	git \
 	unzip \
-	vim
+	vim \
+	wget
 
 RUN git --version
 
 ENV APCU_VERSION 5.1.8
 
-RUN set -xe
+RUN set -xe \
     # intl extension
     && apt-get install -y libicu-dev \
     && docker-php-ext-install intl \
+    && docker-php-ext-enable intl \
     # opcache extension
     && docker-php-ext-install opcache \
+    && docker-php-ext-enable opcache \
     # pdo extensions
     && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-enable pdo_mysql \
     # APCu
     && pecl install apcu-${APCU_VERSION} \
 	&& docker-php-ext-enable apcu \
@@ -30,8 +34,8 @@ RUN set -xe
 	&& docker-php-ext-enable xdebug
 
 # Composer
-COPY ./docker/back/install-composer.sh /usr/local/bin/docker-app-install-composer
-RUN set -xe
+COPY ./install-composer.sh /usr/local/bin/docker-app-install-composer
+RUN set -xe \
     && chmod +x /usr/local/bin/docker-app-install-composer \
     && docker-app-install-composer \
     && mv composer.phar /usr/local/bin/composer
@@ -50,13 +54,12 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 RUN composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress --no-suggest --optimize-autoloader --classmap-authoritative
 
-RUN composer install --prefer-dist --optimize-autoloader --classmap-authoritative --no-progress --no-suggest
-
 # Install PHPUnit
 RUN set -xe \
     && curl -LsS https://phar.phpunit.de/phpunit.phar -o /usr/local/bin/phpunit \
-	&& chmod a+x /usr/local/bin/phpunit \
-	&& phpunit --version
+	&& chmod a+x /usr/local/bin/phpunit
+
+RUN phpunit --version
 
 # Apache
 # Enable rewrite module
