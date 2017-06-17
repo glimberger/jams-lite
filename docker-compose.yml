@@ -6,12 +6,12 @@ services:
         volumes:
             - "./docker/db:/var/lib/mysql"
         ports:
-            - "${MYSQL_PORT}:3306"
+            - "${DATABASE_PORT}:3306"
         environment:
-            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-            - MYSQL_USER=${SF_DB_USER}
-            - MYSQL_PASSWORD=${SF_DB_PWD}
-            - MYSQL_DATABASE=${SF_DB_NAME}
+            - MYSQL_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
+            - MYSQL_DATABASE=${DATABASE_NAME}
+            - MYSQL_USER=${DATABASE_USER}
+            - MYSQL_PASSWORD=${DATABASE_PASSWORD}
         networks:
             - back
 
@@ -33,9 +33,9 @@ services:
             - "9090:9090"
         environment:
             - SF_ENV=${SF_ENV}
-            - SF_DB_USER=${SF_DB_USER}
-            - SF_DB_PWD=${SF_DB_PWD}
-            - SF_DB_NAME=${SF_DB_NAME}
+            - DATABASE_NAME=${DATABASE_NAME}
+            - DATABASE_USER=${DATABASE_USER}
+            - DATABASE_PASSWORD=${DATABASE_PASSWORD}
         volumes:
             - "${APP_DIR}:/var/www/html"
             - "${COMPOSER_DIR}:/root/.composer"
