@@ -67,13 +67,6 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 RUN composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress --no-suggest --optimize-autoloader --classmap-authoritative
 
-# Install PHPUnit
-RUN set -xe \
-    && curl -LsS https://phar.phpunit.de/phpunit.phar -o /usr/local/bin/phpunit \
-	&& chmod a+x /usr/local/bin/phpunit
-
-RUN phpunit --version
-
 # Apache
 # Enable rewrite module
 RUN a2enmod rewrite

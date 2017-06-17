@@ -13,7 +13,7 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
+        <testsuite name="Jams Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

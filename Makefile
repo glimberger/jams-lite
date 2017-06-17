@@ -4,7 +4,7 @@ EXEC=$(FIG) exec app-back
 CONSOLE=php bin/console
 
 .DEFAULT_GOAL := help
-.PHONY: help stop db db-diff db-migrate db-rollback db-load build up perm deps cc composer back
+.PHONY: help stop db db-diff db-migrate db-rollback db-load build up perm deps cc composer back test phpunit
 
 help:
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
@@ -65,11 +65,25 @@ db-load: vendor
 	$(RUN) $(CONSOLE) doctrine:fixtures:load -n
 
 ##
-## Log
+## Logs
 ##-----------------------------------------------------------------------------
 
-log:             ## Display app-back container logs
+logs:             ## Display app-back container logs
+logs:
 	$(FIG) logs -f
+
+##
+## Tests
+##-----------------------------------------------------------------------------
+
+tests:            ## Run all tests
+tests:
+	phpunit
+
+phpunit:          ## Run PHPUnit tests
+phpunit:
+	$(EXEC) /var/www/html/vendor/bin/phpunit
+
 
 ##
 
