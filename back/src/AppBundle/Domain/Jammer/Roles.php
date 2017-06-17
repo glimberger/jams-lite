@@ -5,10 +5,10 @@ namespace AppBundle\Domain\Jammer;
 
 class Roles
 {
-    const USER = 'ROLE_USER';
-    const ADMIN = 'ROLE_ADMIN';
+    public const USER = 'ROLE_USER';
+    public const ADMIN = 'ROLE_ADMIN';
 
-    const ALL = [
+    public const ALL = [
         self::USER,
         self::ADMIN
     ];
