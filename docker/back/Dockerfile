@@ -18,17 +18,30 @@ ENV APCU_VERSION 5.1.8
 RUN set -xe \
     # intl extension
     && apt-get install -y libicu-dev \
+
+    # https://github.com/docker-library/php/issues/307#issuecomment-262491765
+    && curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/58.2/icu4c-58_2-src.tgz \
+    && tar -zxf /tmp/icu.tar.gz -C /tmp \
+    && cd /tmp/icu/source \
+    && ./configure --prefix=/usr/local \
+    && make \
+    && make install \
+    && docker-php-ext-configure intl --with-icu-dir=/usr/local \
     && docker-php-ext-install intl \
     && docker-php-ext-enable intl \
+
     # opcache extension
     && docker-php-ext-install opcache \
     && docker-php-ext-enable opcache \
+
     # pdo extensions
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-enable pdo_mysql \
+
     # APCu
     && pecl install apcu-${APCU_VERSION} \
 	&& docker-php-ext-enable apcu \
+
     # Xdebug
     && pecl install xdebug \
 	&& docker-php-ext-enable xdebug
