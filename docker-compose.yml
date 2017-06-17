@@ -33,6 +33,8 @@ services:
             - "9090:9090"
         environment:
             - SF_ENV=${SF_ENV}
+            - DATABASE_HOST=${DATABASE_HOST}
+            - DATABASE_PORT=${DATABASE_PORT}
             - DATABASE_NAME=${DATABASE_NAME}
             - DATABASE_USER=${DATABASE_USER}
             - DATABASE_PASSWORD=${DATABASE_PASSWORD}
