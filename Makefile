@@ -84,6 +84,10 @@ phpunit:          ## Run PHPUnit tests
 phpunit:
 	$(EXEC) /var/www/html/vendor/bin/phpunit
 
+coverage:         ## PHPUnit Code coverage measurement
+coverage:
+	$(EXEC) /var/www/html/vendor/bin/phpunit --coverage-text
+
 
 ##
 
