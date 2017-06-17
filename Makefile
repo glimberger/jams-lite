@@ -61,7 +61,13 @@ db-load: vendor
 	$(RUN) $(CONSOLE) doctrine:fixtures:load -n
 
 ##
+## Log
+##-----------------------------------------------------------------------------
 
+log:             ## Display app-back container logs
+	$(FIG) logs -f
+
+##
 
 # Internal rules
 
