@@ -4,7 +4,7 @@ EXEC=$(FIG) exec app-back
 CONSOLE=php bin/console
 
 .DEFAULT_GOAL := help
-.PHONY: help stop db db-diff db-migrate db-rollback db-load build up perm deps cc composer
+.PHONY: help stop db db-diff db-migrate db-rollback db-load build up perm deps cc composer back
 
 help:
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
@@ -26,6 +26,10 @@ cc:
 composer:       ## Composer update
 composer:
 	@$(RUN) composer update
+
+back:           ## Bash in back server container
+back:
+	$(EXEC) bash
 
 
 ##
