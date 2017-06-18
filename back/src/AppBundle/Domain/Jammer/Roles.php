@@ -3,7 +3,7 @@
 namespace AppBundle\Domain\Jammer;
 
 
-class Roles
+final class Roles
 {
     public const USER = 'ROLE_USER';
     public const ADMIN = 'ROLE_ADMIN';
