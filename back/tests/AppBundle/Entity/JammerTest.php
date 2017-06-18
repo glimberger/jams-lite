@@ -14,7 +14,19 @@ class JammerTest extends TestCase
 
     protected function setUp()
     {
-        $this->jammer = new Jammer('user@example.com', 'alias');
+        $this->jammer = new Jammer(1,'user@example.com', 'alias');
+    }
+
+    public function testNullId()
+    {
+        $jammer = new Jammer(null, '', '');
+
+        $this->assertNull($jammer->getId());
+    }
+
+    public function testGetId()
+    {
+        $this->assertEquals(1, $this->jammer->getId());
     }
 
     public function testGetSalt()

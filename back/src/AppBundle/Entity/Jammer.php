@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace AppBundle\Entity;
 
 use AppBundle\Domain\Jammer\Roles;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
@@ -86,13 +88,22 @@ class Jammer implements AdvancedUserInterface
     private $accountExpired;
 
     /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="JamSession", mappedBy="owner")
+     */
+    private $sessions;
+
+    /**
      * Jammer constructor.
      *
-     * @param string $email
-     * @param string $alias
+     * @param int|null $id
+     * @param string   $email
+     * @param string   $alias
      */
-    public function __construct(string $email, string $alias)
+    public function __construct(?int $id, string $email, string $alias)
     {
+        $this->id = $id;
         $this->setSalt($this->generateSalt());
         $this->setAccountLocked(false);
         $this->setAccountExpired(false);
@@ -100,12 +111,13 @@ class Jammer implements AdvancedUserInterface
         $this->setRoles([Roles::USER]);
         $this->setUsername($email);
         $this->setAlias($alias);
+        $this->sessions = new ArrayCollection();
     }
 
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -176,7 +188,7 @@ class Jammer implements AdvancedUserInterface
      *
      * @return string The password
      */
-    public function getPassword():? string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -196,7 +208,7 @@ class Jammer implements AdvancedUserInterface
     /**
      * @return string
      */
-    public function getPlainPassword():? string
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
