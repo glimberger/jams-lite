@@ -7,30 +7,20 @@ use PHPUnit\Framework\TestCase;
 
 class RangeTest extends TestCase
 {
-    /**
-     * @var Range
-     */
-    private $range;
-
-    protected function setUp()
+    public function testCreate()
     {
-        $this->range = new Range(['C1', 'D2']);
-    }
-
-    public function testCreateFromRange()
-    {
-        $range = Range::createFromRange(['C1', 'C2']);
+        $range = Range::create(['C1', 'C2']);
 
         $this->assertEquals('C1', $range->getLowerLimit());
         $this->assertEquals('C2', $range->getUpperLimit());
     }
 
-    public function testCreateFromValues()
+    public function testCreateFromRange()
     {
-        $range = Range::createFromValues('C1', 'D1');
+        $range = Range::createFromRange(Range::create(['C1', 'C2']));
 
         $this->assertEquals('C1', $range->getLowerLimit());
-        $this->assertEquals('D1', $range->getUpperLimit());
+        $this->assertEquals('C2', $range->getUpperLimit());
     }
 
     /**
@@ -39,7 +29,7 @@ class RangeTest extends TestCase
      */
     public function testInvalidLowerLimit()
     {
-        $range = Range::createFromValues('note', 'D1');
+        $range = Range::create(['note', 'D1']);
     }
 
     /**
@@ -48,7 +38,7 @@ class RangeTest extends TestCase
      */
     public function testInvalidUpperLimit()
     {
-        $range = Range::createFromValues('C1', 'note');
+        $range = Range::create(['C1', 'note']);
     }
 
     /**
@@ -57,6 +47,6 @@ class RangeTest extends TestCase
      */
     public function testInvalidRange()
     {
-        $range = Range::createFromValues('C3', 'D1');
+        $range = Range::create(['C3', 'D1']);
     }
 }

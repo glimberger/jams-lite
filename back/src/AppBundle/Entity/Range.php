@@ -31,33 +31,23 @@ final class Range
      */
     private $range;
 
-    public static function createFromRange(array $range)
+    public static function create(array $range)
     {
         if (count($range) != 2) {
             throw new \InvalidArgumentException('Range should have two items');
         }
 
+        self::checkValidity($range);
+
         return new self($range);
     }
 
-    public static function createFromValues(string $lowerLimit, string $upperLimit)
+    public static function createFromRange(Range $range)
     {
-        return new self([$lowerLimit, $upperLimit]);
+        return new self([$range->getLowerLimit(), $range->getUpperLimit()]);
     }
 
-    /**
-     * Range constructor.
-     *
-     * @param array $range
-     */
-    public function __construct(array $range)
-    {
-        $this->checkValidity($range);
-
-        $this->range = $range;
-    }
-
-    private function checkValidity(array $range)
+    private static function checkValidity(array $range)
     {
         list($lowerLimit, $upperLimit) = $range;
 
@@ -72,6 +62,16 @@ final class Range
         if (array_search($lowerLimit, self::VALUES, true) > array_search($upperLimit, self::VALUES, true)) {
             throw new \InvalidArgumentException("Invalid range");
         }
+    }
+
+    /**
+     * Range constructor.
+     *
+     * @param array $range
+     */
+    private function __construct(array $range)
+    {
+        $this->range = $range;
     }
 
     public function getLowerLimit(): string
