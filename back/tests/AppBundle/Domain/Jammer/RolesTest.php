@@ -2,7 +2,7 @@
 
 namespace Test\AppBundle\Domain\Jammer;
 
-use AppBundle\Domain\Jammer\Roles;
+use AppBundle\Utils\Roles;
 use PHPUnit\Framework\TestCase;
 
 class RolesTest extends TestCase

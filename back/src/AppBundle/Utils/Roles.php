@@ -1,8 +1,12 @@
 <?php
 
-namespace AppBundle\Domain\Jammer;
+namespace AppBundle\Utils;
 
-
+/**
+ * Class Roles
+ *
+ * @package AppBundle\Utils
+ */
 final class Roles
 {
     public const USER = 'ROLE_USER';
