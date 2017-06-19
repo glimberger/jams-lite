@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -73,6 +75,18 @@ final class JamSession
     private $owner;
 
     /**
+     * @var Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Track")
+     * @ORM\JoinTable(
+     *     name="session_tracks",
+     *     joinColumns={@ORM\JoinColumn(name="session_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="track_id", referencedColumnName="id", unique=true)}
+     * )
+     */
+    private $tracks;
+
+    /**
      * Session constructor.
      *
      * @param int|null $id
@@ -86,6 +100,7 @@ final class JamSession
         $this->owner = $owner;
         $this->tempo = $tempo;
         $this->label = $label;
+        $this->tracks = new ArrayCollection();
     }
 
     /**
@@ -172,6 +187,49 @@ final class JamSession
     public function setOwner(Jammer $owner): JamSession
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getTracks(): Collection
+    {
+        return $this->tracks;
+    }
+
+    /**
+     * @param array $tracks
+     *
+     * @return JamSession
+     */
+    public function setTracks(array $tracks): JamSession
+    {
+        $this->tracks = new ArrayCollection($tracks);
+
+        return $this;
+    }
+
+    public function addTrack(Track $track): JamSession
+    {
+        if (!$this->tracks->contains($track)) {
+            $this->tracks[] = $track;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Track $track
+     *
+     * @return JamSession
+     */
+    public function removeTrack(Track $track): JamSession
+    {
+        if ($this->tracks->contains($track)) {
+            $this->tracks->removeElement($track);
+        }
 
         return $this;
     }
