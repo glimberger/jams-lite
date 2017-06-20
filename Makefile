@@ -107,10 +107,10 @@ perm:
 vendor: composer.lock
 	@$(RUN) composer install
 
-composer.lock: composer.json
+composer.lock: back/composer.json
 	@echo compose.lock is not up to date.
 
-app/config/parameters.yml: app/config/parameters.yml.dist
+app/config/parameters.yml: back/app/config/parameters.yml.dist
 	@$(RUN) composer run-script post-install-cmd
 
 
