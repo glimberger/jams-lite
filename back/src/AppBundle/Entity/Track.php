@@ -24,6 +24,14 @@ final class Track
     private $id;
 
     /**
+     * @var Instrument
+     *
+     * @ORM\ManyToOne(targetEntity="Instrument")
+     * @ORM\JoinColumn(name="instrument_id", referencedColumnName="id")
+     */
+    private $instrument;
+
+    /**
      * Track constructor.
      *
      * @param int $id
@@ -39,5 +47,25 @@ final class Track
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return Instrument
+     */
+    public function getInstrument(): ?Instrument
+    {
+        return $this->instrument;
+    }
+
+    /**
+     * @param Instrument $instrument
+     *
+     * @return Track
+     */
+    public function setInstrument(Instrument $instrument): Track
+    {
+        $this->instrument = $instrument;
+
+        return $this;
     }
 }
