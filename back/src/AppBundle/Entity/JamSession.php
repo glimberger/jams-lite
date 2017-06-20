@@ -53,7 +53,7 @@ final class JamSession
      * @ORM\Column(
      *     type="text",
      *     name="description",
-     *     nullable=true
+     *     nullable=true,
      *     options={"comment": "a exhaustive description of the session"}
      * )
      */
@@ -68,8 +68,7 @@ final class JamSession
      * )
      * @ORM\JoinColumn(
      *     name="jammer_id",
-     *     referencedColumnName="id",
-     *     options={"comment": "the jammer owner ID"}
+     *     referencedColumnName="id"
      * )
      */
     private $owner;
@@ -152,7 +151,7 @@ final class JamSession
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getDescription(): ?string
     {

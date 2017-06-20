@@ -5,6 +5,14 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * Class Sample
+ *
+ * @package AppBundle\Entity
+ *
+ * @ORM\Table(name="sample")
+ * @ORM\Entity()
+ */
 final class Sample
 {
     /**

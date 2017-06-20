@@ -27,7 +27,7 @@ final class Range
     /**
      * @var array
      *
-     * @ORM\Column(type="json", name="range")
+     * @ORM\Column(type="json_array", name="range")
      */
     private $range;
 

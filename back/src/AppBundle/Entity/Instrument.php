@@ -6,6 +6,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Class Instrument
+ *
+ * @package AppBundle\Entity
+ *
+ * @ORM\Table(name="instrument")
+ * @ORM\Entity()
+ */
 final class Instrument
 {
     /**
