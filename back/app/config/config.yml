@@ -67,3 +67,13 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+vich_uploader:
+    db_driver: orm
+    mappings:
+        sample:
+            uri_prefix:         /audio/samples
+            upload_destination: '%kernel.project_dir%/web/audio/samples'
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
