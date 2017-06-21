@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Class InstrumentMapping
@@ -15,11 +16,12 @@ use Doctrine\ORM\Mapping as ORM;
 final class Mapping
 {
     /**
-     * @var int
+     * @var \Ramsey\Uuid\Uuid
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="uuid")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     private $id;
 
@@ -41,11 +43,11 @@ final class Mapping
     /**
      * InstrumentMapping constructor.
      *
-     * @param int    $id
-     * @param array  $range
-     * @param Sample $sample
+     * @param Uuid $id
+     * @param array    $range
+     * @param Sample   $sample
      */
-    public function __construct(int $id, array $range, Sample $sample)
+    public function __construct(Uuid $id, array $range, Sample $sample)
     {
         $this->id = $id;
         $this->range = Range::create($range);
@@ -53,9 +55,9 @@ final class Mapping
     }
 
     /**
-     * @return int
+     * @return Uuid
      */
-    public function getId(): int
+    public function getId(): Uuid
     {
         return $this->id;
     }

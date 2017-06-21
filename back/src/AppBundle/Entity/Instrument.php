@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Class Instrument
@@ -17,11 +18,12 @@ use Doctrine\ORM\Mapping as ORM;
 final class Instrument
 {
     /**
-     * @var int
+     * @var \Ramsey\Uuid\Uuid
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="uuid")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     private $id;
 
@@ -47,10 +49,10 @@ final class Instrument
     /**
      * Instrument constructor.
      *
-     * @param int    $id
-     * @param string $label
+     * @param Uuid $id
+     * @param string   $label
      */
-    public function __construct(int $id, string $label)
+    public function __construct(Uuid $id, string $label)
     {
         $this->id = $id;
         $this->label = $label;
@@ -58,9 +60,9 @@ final class Instrument
     }
 
     /**
-     * @return int
+     * @return Uuid
      */
-    public function getId(): int
+    public function getId(): Uuid
     {
         return $this->id;
     }

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Class Track
@@ -15,11 +16,12 @@ use Doctrine\ORM\Mapping as ORM;
 final class Track
 {
     /**
-     * @var int
+     * @var \Ramsey\Uuid\Uuid
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="uuid")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     private $id;
 
@@ -34,17 +36,17 @@ final class Track
     /**
      * Track constructor.
      *
-     * @param int $id
+     * @param Uuid $id
      */
-    public function __construct(?int $id)
+    public function __construct(Uuid $id)
     {
         $this->id = $id;
     }
 
     /**
-     * @return int
+     * @return Uuid
      */
-    public function getId(): ?int
+    public function getId(): Uuid
     {
         return $this->id;
     }
