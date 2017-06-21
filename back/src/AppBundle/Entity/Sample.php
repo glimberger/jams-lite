@@ -19,11 +19,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 final class Sample
 {
     /**
-     * @var int
+     * @var \Ramsey\Uuid\Uuid
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="uuid")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     private $id;
 
