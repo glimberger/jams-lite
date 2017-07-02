@@ -6,6 +6,7 @@ use AppBundle\Entity\Instrument;
 use AppBundle\Entity\Mapping;
 use AppBundle\Entity\Sample;
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid;
 
 class InstrumentTest extends TestCase
 {
@@ -19,16 +20,23 @@ class InstrumentTest extends TestCase
      */
     private $mapping;
 
+    private $mappingUuid;
+
+    private $instrumentUuid;
+
     protected function setUp()
     {
-        $this->mapping = new Mapping(1, ['C1', 'C1'], new Sample(1));
-        $this->instrument = new Instrument(1, 'label');
+        $this->mappingUuid = Uuid::uuid4();
+        $this->mapping = new Mapping($this->mappingUuid, ['C1', 'C1'], $this->createMock(Sample::class));
+
+        $this->instrumentUuid = Uuid::uuid4();
+        $this->instrument = new Instrument($this->instrumentUuid, 'label');
         $this->instrument->addMapping($this->mapping);
     }
 
     public function testGetId()
     {
-        $this->assertEquals(1, $this->instrument->getId());
+        $this->assertEquals($this->instrumentUuid, $this->instrument->getId());
     }
 
     public function testGetLabel()
@@ -48,7 +56,7 @@ class InstrumentTest extends TestCase
     {
         $this->assertCount(1, $this->instrument->getMappings());
 
-        $mapping = new Mapping(1, ['C2', 'C2'], new Sample(2));
+        $mapping = $this->createMock(Mapping::class);
         $obj = $this->instrument->addMapping($mapping);
 
         $this->assertSame($obj, $this->instrument);
@@ -77,7 +85,7 @@ class InstrumentTest extends TestCase
 
     public function testRemoveMappingAgain()
     {
-        $mapping = new Mapping(1, ['C2', 'C2'], new Sample(2));
+        $mapping = $this->createMock(Mapping::class);
         $this->instrument->addMapping($mapping);
 
         $this->assertCount(2, $this->instrument->getMappings());

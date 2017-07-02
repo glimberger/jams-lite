@@ -4,6 +4,7 @@ namespace Tests\AppBundle\Entity;
 
 use AppBundle\Entity\Jammer;
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid;
 
 class JammerTest extends TestCase
 {
@@ -12,9 +13,15 @@ class JammerTest extends TestCase
      */
     private $jammer;
 
+    /**
+     * @var Uuid
+     */
+    private $uuid;
+
     protected function setUp()
     {
-        $this->jammer = new Jammer(1,'user@example.com', 'alias');
+        $this->uuid = Uuid::uuid4();
+        $this->jammer = new Jammer($this->uuid,'user@example.com', 'alias');
     }
 
     public function testNullId()
@@ -26,7 +33,7 @@ class JammerTest extends TestCase
 
     public function testGetId()
     {
-        $this->assertEquals(1, $this->jammer->getId());
+        $this->assertEquals($this->uuid, $this->jammer->getId());
     }
 
     public function testGetSalt()

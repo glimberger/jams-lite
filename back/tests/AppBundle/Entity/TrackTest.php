@@ -5,6 +5,7 @@ namespace Test\AppBundle\Entity;
 use AppBundle\Entity\Instrument;
 use AppBundle\Entity\Track;
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid;
 
 class TrackTest extends TestCase
 {
@@ -13,14 +14,20 @@ class TrackTest extends TestCase
      */
     private $track;
 
+    /**
+     * @var Uuid
+     */
+    private $uuid;
+
     protected function setUp()
     {
-        $this->track = new Track(1);
+        $this->uuid = Uuid::uuid4();
+        $this->track = new Track($this->uuid);
     }
 
     public function testGetId()
     {
-        $this->assertEquals(1, $this->track->getId());
+        $this->assertEquals($this->uuid, $this->track->getId());
     }
 
     public function testGetInstrument()
@@ -30,7 +37,7 @@ class TrackTest extends TestCase
 
     public function testSetInstrument()
     {
-        $instrument = new Instrument(1, 'label');
+        $instrument = new Instrument(Uuid::uuid4(), 'label');
         $obj = $this->track->setInstrument($instrument);
 
         $this->assertSame($obj, $this->track);

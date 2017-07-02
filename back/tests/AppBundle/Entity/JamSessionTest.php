@@ -6,6 +6,7 @@ use AppBundle\Entity\Jammer;
 use AppBundle\Entity\JamSession;
 use AppBundle\Entity\Track;
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid;
 
 class JamSessionTest extends TestCase
 {
@@ -14,15 +15,28 @@ class JamSessionTest extends TestCase
      */
     private $session;
 
+    /**
+     * @var Uuid
+     */
+    private $jammerUuid;
+
+    /**
+     * @var Uuid
+     */
+    private $sessionUuid;
+
     protected function setUp()
     {
-        $jammer = new Jammer(1, 'jammer@example.com', 'jammer');
-        $this->session = new JamSession(1, $jammer, 120, 'Jam session');
+        $this->jammerUuid = Uuid::uuid4();
+        $jammer = new Jammer($this->jammerUuid, 'jammer@example.com', 'jammer');
+
+        $this->sessionUuid = Uuid::uuid4();
+        $this->session = new JamSession($this->sessionUuid, $jammer, 120, 'Jam session');
     }
 
     public function testNullId()
     {
-        $this->assertEquals(1, $this->session->getId());
+        $this->assertEquals($this->sessionUuid, $this->session->getId());
     }
 
     public function testGetTempo()
@@ -54,7 +68,7 @@ class JamSessionTest extends TestCase
     public function testGetOwner()
     {
         $this->assertInstanceOf(Jammer::class, $this->session->getOwner());
-        $this->assertEquals(1, $this->session->getOwner()->getId());
+        $this->assertEquals($this->jammerUuid, $this->session->getOwner()->getId());
         $this->assertEquals('jammer@example.com', $this->session->getOwner()->getUsername());
         $this->assertEquals('jammer', $this->session->getOwner()->getAlias());
     }
@@ -79,8 +93,8 @@ class JamSessionTest extends TestCase
 
     public function testAddTrack()
     {
-        $track1 = new Track(100);
-        $track2 = new Track(101);
+        $track1 = $this->createMock(Track::class);
+        $track2 = $this->createMock(Track::class);
         $obj = $this->session->addTrack($track1)->addTrack($track2);
 
         $this->assertSame($obj, $this->session);
@@ -91,7 +105,7 @@ class JamSessionTest extends TestCase
 
     public function testAddTrackTwice()
     {
-        $track = new Track(100);
+        $track = $this->createMock(Track::class);
         $obj = $this->session->addTrack($track);
 
         $this->assertSame($obj, $this->session);
@@ -104,8 +118,8 @@ class JamSessionTest extends TestCase
 
     public function testRemoveTrack()
     {
-        $track1 = new Track(100);
-        $track2 = new Track(101);
+        $track1 = $this->createMock(Track::class);
+        $track2 = $this->createMock(Track::class);
         $this->session->addTrack($track1)->addTrack($track2);
 
         $this->assertCount(2, $this->session->getTracks());
@@ -120,8 +134,8 @@ class JamSessionTest extends TestCase
 
     public function testRemoveUnknownTrack()
     {
-        $track1 = new Track(100);
-        $track2 = new Track(101);
+        $track1 = $this->createMock(Track::class);
+        $track2 = $this->createMock(Track::class);
         $this->session->addTrack($track1);
 
         $obj = $this->session->removeTrack($track2);
@@ -133,8 +147,8 @@ class JamSessionTest extends TestCase
 
     public function testRemoveTrackTwice()
     {
-        $track1 = new Track(100);
-        $track2 = new Track(101);
+        $track1 = $this->createMock(Track::class);
+        $track2 = $this->createMock(Track::class);
         $this->session->addTrack($track1)->addTrack($track2);
 
         $this->assertCount(2, $this->session->getTracks());

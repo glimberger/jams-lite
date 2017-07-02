@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace AppBundle\Entity;
 
@@ -99,11 +99,11 @@ class Jammer implements AdvancedUserInterface
     /**
      * Jammer constructor.
      *
-     * @param UuidInterface $id
-     * @param string        $email
-     * @param string        $alias
+     * @param UuidInterface|null $id
+     * @param string             $email
+     * @param string             $alias
      */
-    public function __construct(UuidInterface $id, string $email, string $alias)
+    public function __construct(?UuidInterface $id, string $email, string $alias)
     {
         $this->id = $id;
         $this->setSalt($this->generateSalt());
@@ -117,9 +117,9 @@ class Jammer implements AdvancedUserInterface
     }
 
     /**
-     * @return UuidInterface
+     * @return null|UuidInterface
      */
-    public function getId(): UuidInterface
+    public function getId(): ?UuidInterface
     {
         return $this->id;
     }

@@ -6,6 +6,7 @@ use AppBundle\Entity\Mapping;
 use AppBundle\Entity\Range;
 use AppBundle\Entity\Sample;
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid;
 
 class MappingTest extends TestCase
 {
@@ -19,15 +20,21 @@ class MappingTest extends TestCase
      */
     private $sample;
 
+    /**
+     * @var Uuid
+     */
+    private $uuid;
+
     protected function setUp()
     {
-        $this->sample = new Sample(1);
-        $this->mapping = new Mapping(1, ['C1', 'D2'], $this->sample);
+        $this->sample = $this->createMock(Sample::class);
+        $this->uuid = Uuid::uuid4();
+        $this->mapping = new Mapping($this->uuid, ['C1', 'D2'], $this->sample);
     }
 
     public function testGetId()
     {
-        $this->assertEquals(1, $this->mapping->getId());
+        $this->assertEquals($this->uuid, $this->mapping->getId());
     }
 
     public function testGetRange()
@@ -65,7 +72,7 @@ class MappingTest extends TestCase
 
     public function testSetSample()
     {
-        $sample = new Sample(2);
+        $sample = $this->createMock(Sample::class);
         $obj = $this->mapping->setSample($sample);
 
         $this->assertSame($obj, $this->mapping);

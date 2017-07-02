@@ -4,21 +4,15 @@ namespace Tests\AppBundle\Entity;
 
 use AppBundle\Entity\Sample;
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid;
 
 class SampleTest extends TestCase
 {
-    /**
-     * @var Sample
-     */
-    private $sample;
-
-    protected function setUp()
-    {
-        $this->sample = new Sample(1);
-    }
-
     public function testGetId()
     {
-        $this->assertEquals(1 , $this->sample->getId());
+        $uuid = Uuid::uuid4();
+        $sample = new Sample($uuid);
+
+        $this->assertEquals($uuid , $sample->getId());
     }
 }
