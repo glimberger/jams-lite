@@ -1,10 +1,11 @@
-version: '3'
+version: '2'
 
 services:
     db:
         image: mysql:latest
         volumes:
-            - "./docker/db:/var/lib/mysql"
+            - ${DATABASE_DATA_DIR}:/var/lib/mysql
+#            - ${DATABASE_LOG_DIR}:/var
         ports:
             - "${DATABASE_PORT}:3306"
         environment:
@@ -12,8 +13,6 @@ services:
             - MYSQL_DATABASE=${DATABASE_NAME}
             - MYSQL_USER=${DATABASE_USER}
             - MYSQL_PASSWORD=${DATABASE_PASSWORD}
-        networks:
-            - back
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin:latest
@@ -21,32 +20,23 @@ services:
             - "${PHP_MY_ADMIN_PORT}:80"
         links:
           - db:mysql
-        networks:
-            - back
 
     app-back:
         build:
-            context: ./docker/back
-            dockerfile: ./Dockerfile
+            context: ${DOCKER_FILES_BACK_DIR}
         ports:
             - "${HOST_PORT}:80"
             - "9090:9090"
         environment:
-            - SF_ENV=${SF_ENV}
             - DATABASE_HOST=${DATABASE_HOST}
             - DATABASE_PORT=${DATABASE_PORT}
             - DATABASE_NAME=${DATABASE_NAME}
             - DATABASE_USER=${DATABASE_USER}
             - DATABASE_PASSWORD=${DATABASE_PASSWORD}
         volumes:
-            - "${APP_DIR}:/var/www/html"
-            - "${COMPOSER_DIR}:/root/.composer"
-            - "./docker/back/log:/var/log"
+            - ${APP_DIR}:/var/www/html
+            - ${COMPOSER_DIR}:/root/.composer
+            - ${BACK_APACHE_LOG_DIR}:/var/log/apache2
+            - ${BACK_SYMFONY_LOG_DIR}:/var/www/html/var/logs
         links:
             - db
-        networks:
-            - back
-
-networks:
-    front:
-    back:
