@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Entity\File as EmbeddedFile;
@@ -17,10 +17,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="sample")
  * @ORM\Entity()
  */
-final class Sample
+class Sample
 {
     /**
-     * @var \Ramsey\Uuid\Uuid
+     * @var UuidInterface
      *
      * @ORM\Id
      * @ORM\Column(type="uuid")
@@ -59,18 +59,18 @@ final class Sample
     /**
      * Track constructor.
      *
-     * @param Uuid $id
+     * @param UuidInterface $id
      */
-    public function __construct(Uuid $id)
+    public function __construct(UuidInterface $id)
     {
         $this->id = $id;
         $this->sound = new EmbeddedFile();
     }
 
     /**
-     * @return Uuid
+     * @return UuidInterface
      */
-    public function getId(): Uuid
+    public function getId(): UuidInterface
     {
         return $this->id;
     }

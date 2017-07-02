@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * Class Instrument
@@ -15,10 +15,10 @@ use Ramsey\Uuid\Uuid;
  * @ORM\Table(name="instrument")
  * @ORM\Entity()
  */
-final class Instrument
+class Instrument
 {
     /**
-     * @var \Ramsey\Uuid\Uuid
+     * @var UuidInterface
      *
      * @ORM\Id
      * @ORM\Column(type="uuid")
@@ -49,10 +49,10 @@ final class Instrument
     /**
      * Instrument constructor.
      *
-     * @param Uuid $id
-     * @param string   $label
+     * @param UuidInterface $id
+     * @param string        $label
      */
-    public function __construct(Uuid $id, string $label)
+    public function __construct(UuidInterface $id, string $label)
     {
         $this->id = $id;
         $this->label = $label;
@@ -60,9 +60,9 @@ final class Instrument
     }
 
     /**
-     * @return Uuid
+     * @return UuidInterface
      */
-    public function getId(): Uuid
+    public function getId(): UuidInterface
     {
         return $this->id;
     }

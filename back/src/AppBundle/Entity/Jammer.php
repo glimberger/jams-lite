@@ -7,7 +7,7 @@ use AppBundle\Utils\Roles;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 class Jammer implements AdvancedUserInterface
 {
     /**
-     * @var \Ramsey\Uuid\Uuid
+     * @var UuidInterface
      *
      * @ORM\Id
      * @ORM\Column(type="uuid")
@@ -99,11 +99,11 @@ class Jammer implements AdvancedUserInterface
     /**
      * Jammer constructor.
      *
-     * @param Uuid $id
+     * @param UuidInterface $id
      * @param string        $email
      * @param string        $alias
      */
-    public function __construct(Uuid $id, string $email, string $alias)
+    public function __construct(UuidInterface $id, string $email, string $alias)
     {
         $this->id = $id;
         $this->setSalt($this->generateSalt());
@@ -117,9 +117,9 @@ class Jammer implements AdvancedUserInterface
     }
 
     /**
-     * @return Uuid
+     * @return UuidInterface
      */
-    public function getId(): Uuid
+    public function getId(): UuidInterface
     {
         return $this->id;
     }

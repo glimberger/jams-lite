@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * Class Session
@@ -15,10 +15,10 @@ use Ramsey\Uuid\Uuid;
  * @ORM\Table(name="session")
  * @ORM\Entity()
  */
-final class JamSession
+class JamSession
 {
     /**
-     * @var \Ramsey\Uuid\Uuid
+     * @var UuidInterface
      *
      * @ORM\Id
      * @ORM\Column(type="uuid")
@@ -90,12 +90,12 @@ final class JamSession
     /**
      * Session constructor.
      *
-     * @param Uuid $id
+     * @param UuidInterface $id
      * @param Jammer        $owner
      * @param string        $tempo
      * @param string        $label
      */
-    public function __construct(Uuid $id, Jammer $owner, $tempo, $label)
+    public function __construct(UuidInterface $id, Jammer $owner, $tempo, $label)
     {
         $this->id = $id;
         $this->owner = $owner;
@@ -105,9 +105,9 @@ final class JamSession
     }
 
     /**
-     * @return Uuid
+     * @return UuidInterface
      */
-    public function getId(): Uuid
+    public function getId(): UuidInterface
     {
         return $this->id;
     }

@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * Class InstrumentMapping
@@ -13,10 +13,10 @@ use Ramsey\Uuid\Uuid;
  * @ORM\Table(name="mapping")
  * @ORM\Entity()
  */
-final class Mapping
+class Mapping
 {
     /**
-     * @var \Ramsey\Uuid\Uuid
+     * @var UuidInterface
      *
      * @ORM\Id
      * @ORM\Column(type="uuid")
@@ -43,11 +43,11 @@ final class Mapping
     /**
      * InstrumentMapping constructor.
      *
-     * @param Uuid $id
+     * @param UuidInterface $id
      * @param array    $range
      * @param Sample   $sample
      */
-    public function __construct(Uuid $id, array $range, Sample $sample)
+    public function __construct(UuidInterface $id, array $range, Sample $sample)
     {
         $this->id = $id;
         $this->range = Range::create($range);
@@ -55,9 +55,9 @@ final class Mapping
     }
 
     /**
-     * @return Uuid
+     * @return UuidInterface
      */
-    public function getId(): Uuid
+    public function getId(): UuidInterface
     {
         return $this->id;
     }

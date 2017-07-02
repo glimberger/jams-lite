@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * Class Track
@@ -13,10 +13,10 @@ use Ramsey\Uuid\Uuid;
  * @ORM\Table(name="track")
  * @ORM\Entity()
  */
-final class Track
+class Track
 {
     /**
-     * @var \Ramsey\Uuid\Uuid
+     * @var UuidInterface
      *
      * @ORM\Id
      * @ORM\Column(type="uuid")
@@ -36,17 +36,17 @@ final class Track
     /**
      * Track constructor.
      *
-     * @param Uuid $id
+     * @param UuidInterface $id
      */
-    public function __construct(Uuid $id)
+    public function __construct(UuidInterface $id)
     {
         $this->id = $id;
     }
 
     /**
-     * @return Uuid
+     * @return UuidInterface
      */
-    public function getId(): Uuid
+    public function getId(): UuidInterface
     {
         return $this->id;
     }
