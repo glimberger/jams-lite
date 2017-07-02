@@ -2,25 +2,24 @@ FROM php:7.1.6-apache
 
 LABEL maintainer "Guillaume Limberger <glim.dev@gmail.com>"
 
-COPY ./php.ini /usr/local/etc/php/
+# Apache
+# Enable rewrite module
+RUN a2enmod rewrite
 
-RUN apt-get update && apt-get install -y \
-	apt-utils \
-	git \
-	unzip \
-	vim \
-	wget
-
-RUN git --version
+RUN set -xe \
+    && apt-get update \
+    && apt-get install --no-install-recommends -y apt-utils git unzip vim wget libicu-dev \
+    && apt-get clean
 
 ENV APCU_VERSION 5.1.8
 
+ENV ICUVERSION 58.2
+ENV ICU_VERSION 58_2
+
 RUN set -xe \
     # intl extension
-    && apt-get install -y libicu-dev \
-
     # https://github.com/docker-library/php/issues/307#issuecomment-262491765
-    && curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/58.2/icu4c-58_2-src.tgz \
+        && curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/${ICUVERSION}/icu4c-${ICU_VERSION}-src.tgz \
     && tar -zxf /tmp/icu.tar.gz -C /tmp \
     && cd /tmp/icu/source \
     && ./configure --prefix=/usr/local \
@@ -28,15 +27,12 @@ RUN set -xe \
     && make install \
     && docker-php-ext-configure intl --with-icu-dir=/usr/local \
     && docker-php-ext-install intl \
-    && docker-php-ext-enable intl \
 
     # opcache extension
     && docker-php-ext-install opcache \
-    && docker-php-ext-enable opcache \
 
     # pdo extensions
     && docker-php-ext-install pdo_mysql \
-    && docker-php-ext-enable pdo_mysql \
 
     # APCu
     && pecl install apcu-${APCU_VERSION} \
@@ -67,6 +63,5 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 RUN composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress --no-suggest --optimize-autoloader --classmap-authoritative
 
-# Apache
-# Enable rewrite module
-RUN a2enmod rewrite
+COPY ./php.ini /usr/local/etc/php/
+
