@@ -1,5 +1,4 @@
 .idea
 
-/docker/back/composer/
-/docker/back/log/
-/docker/db/
+/logs
+/db/
