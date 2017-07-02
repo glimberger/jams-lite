@@ -19,7 +19,7 @@ ENV ICU_VERSION 58_2
 RUN set -xe \
     # intl extension
     # https://github.com/docker-library/php/issues/307#issuecomment-262491765
-        && curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/${ICUVERSION}/icu4c-${ICU_VERSION}-src.tgz \
+    && curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/${ICUVERSION}/icu4c-${ICU_VERSION}-src.tgz \
     && tar -zxf /tmp/icu.tar.gz -C /tmp \
     && cd /tmp/icu/source \
     && ./configure --prefix=/usr/local \
