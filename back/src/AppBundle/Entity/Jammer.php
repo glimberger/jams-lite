@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use AppBundle\Utils\Roles;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -17,6 +18,8 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  *
  * @ORM\Table(name="jammer")
  * @ORM\Entity()
+ *
+ * @ApiResource()
  */
 class Jammer implements AdvancedUserInterface
 {
@@ -113,7 +116,7 @@ class Jammer implements AdvancedUserInterface
         $this->setRoles([Roles::USER]);
         $this->setUsername($email);
         $this->setAlias($alias);
-        $this->sessions = new ArrayCollection();
+        $this->resetSessionCollection();
     }
 
     /**
@@ -436,6 +439,59 @@ class Jammer implements AdvancedUserInterface
     public function disable()
     {
         $this->setEnabled(false);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getSessions(): Collection
+    {
+        return $this->sessions;
+    }
+
+    /**
+     * @param JamSession[] $sessions
+     * @return Jammer
+     */
+    public function setSessions(array $sessions): Jammer
+    {
+        $this->sessions = new ArrayCollection($sessions);
+
+        return $this;
+    }
+
+    /**
+     * @return Jammer
+     */
+    public function resetSessionCollection(): Jammer
+    {
+        return $this->setSessions([]);
+    }
+
+    /**
+     * @param JamSession $session
+     * @return Jammer
+     */
+    public function addSession(JamSession $session): Jammer
+    {
+        if (!$this->getSessions()->contains($session)) {
+            $this->getSessions()->add($session);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param JamSession $session
+     * @return Jammer
+     */
+    public function removeSession(JamSession $session): Jammer
+    {
+        if ($this->getSessions()->contains($session)) {
+            $this->getSessions()->removeElement($session);
+        }
 
         return $this;
     }
