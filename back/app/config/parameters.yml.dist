@@ -10,4 +10,6 @@ parameters:
     mailer_user:            ~
     mailer_password:        ~
 
+    cors_allow_origin: http://localhost
+
     secret: ThisTokenIsNotSoSecretChangeIt

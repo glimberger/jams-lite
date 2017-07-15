@@ -80,3 +80,17 @@ vich_uploader:
             inject_on_load:     false
             delete_on_update:   true
             delete_on_remove:   true
+
+# Nelmio CORS
+nelmio_cors:
+    defaults:
+        allow_origin: ['%cors_allow_origin%']
+        allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS']
+        allow_headers: ['content-type', 'authorization']
+        expose_headers: ['link']
+        max_age: 3600
+    paths:
+        '^/': ~
+
+api_platform:
+    version: 0.1
