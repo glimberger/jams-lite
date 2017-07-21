@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class Jammer
@@ -19,7 +20,10 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * @ORM\Table(name="jammer")
  * @ORM\Entity()
  *
- * @ApiResource()
+ * @ApiResource(attributes={
+ *     "normalization_context"={"groups"={"read"}},
+ *     "denormalization_context"={"groups"={"write"}}
+ * })
  */
 class Jammer implements AdvancedUserInterface
 {
@@ -30,6 +34,8 @@ class Jammer implements AdvancedUserInterface
      * @ORM\Column(type="uuid")
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+     *
+     * @Groups({"read"})
      */
     private $id;
 
@@ -37,6 +43,8 @@ class Jammer implements AdvancedUserInterface
      * @var string
      *
      * @ORM\Column(type="string", name="email", options={"comment": "email address"})
+     *
+     * @Groups({"read", "write"})
      */
     private $email;
 
@@ -44,6 +52,8 @@ class Jammer implements AdvancedUserInterface
      * @var string
      *
      * @ORM\Column(type="string", name="alias", options={"comment": "alias name"})
+     *
+     * @Groups({"read", "write"})
      */
     private $alias;
 
@@ -56,11 +66,15 @@ class Jammer implements AdvancedUserInterface
 
     /**
      * @var string
+     *
+     * @Groups({"write"})
      */
     private $plainPassword;
 
     /**
      * @var string
+     *
+     * @ORM\Column(type="string", name="salt", options={"comment": "salt for password"})
      */
     private $salt;
 
