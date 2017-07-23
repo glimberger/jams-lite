@@ -32,19 +32,42 @@ class LoadJammerData implements FixtureInterface, ContainerAwareInterface
      */
     public function load(ObjectManager $manager): void
     {
-        $superAdminID = Uuid::uuid4();
-
-        $superAdmin = new Jammer($superAdminID, 'glim.dev@gmail.com', 'glim');
-        $superAdmin
-            ->setRoles([Roles::ADMIN])
-            ->setPlainPassword('Ddn@12081972')
-            ->enable();
+        $jammers = [
+            [
+                'email' => 'glim.dev@gmail.com',
+                'alias' => 'glim',
+                'firstName' => 'Guillaume',
+                'lastName' => 'Limberger',
+                'roles' => [Roles::ADMIN],
+                'plainPassword' => 'Ddn@12081972',
+            ],
+            [
+                'email' => 'jsmith@example.com',
+                'alias' => 'jsmith',
+                'firstName' => 'John',
+                'lastName' => 'Smith',
+                'roles' => [Roles::USER],
+                'plainPassword' => 'johnsmith2017',
+            ]
+        ];
 
         $encoder = $this->container->get('security.password_encoder');
-        $password = $encoder->encodePassword($superAdmin, $superAdmin->getPlainPassword());
-        $superAdmin->setPassword($password);
 
-        $manager->persist($superAdmin);
+        foreach ($jammers as $jammer) {
+            $_jammer = new Jammer(Uuid::uuid4(), $jammer['email'], $jammer['alias']);
+            $_jammer
+                ->setFirstName($jammer['firstName'])
+                ->setLastName($jammer['lastName'])
+                ->setRoles($jammer['roles'])
+                ->setPlainPassword($jammer['plainPassword'])
+                ->enable();
+
+            $password = $encoder->encodePassword($_jammer, $_jammer->getPlainPassword());
+            $_jammer->setPassword($password);
+
+            $manager->persist($_jammer);
+        }
+
         $manager->flush();
     }
 
