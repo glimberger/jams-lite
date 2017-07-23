@@ -58,6 +58,20 @@ class Jammer implements AdvancedUserInterface
     private $alias;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="first_name", nullable=true, options={"comment": "first name"})
+     */
+    private $firstName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="last_name", nullable=true, options={"comment": "last name"})
+     */
+    private $lastName;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(type="string", name="password", options={"comment": "password"})
@@ -157,6 +171,44 @@ class Jammer implements AdvancedUserInterface
     public function setAlias($alias)
     {
         $this->alias = $alias;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param string $firstName
+     * @return $this
+     */
+    public function setFirstName(string $firstName)
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param string $lastName
+     * @return $this
+     */
+    public function setLastName(string $lastName)
+    {
+        $this->lastName = $lastName;
 
         return $this;
     }
