@@ -75,3 +75,8 @@ ARG HOST_IP=127.0.0.1
 ENV HOST_IP ${HOST_IP}
 
 RUN echo '\nxdebug.remote_host='$HOST_IP >> /usr/local/etc/php/php.ini
+
+COPY ./post-install.sh /usr/local/bin/docker-app-post-install
+RUN set -ex \
+    && chmod +x /usr/local/bin/docker-app-post-install \
+    && docker-app-post-install
