@@ -7,6 +7,7 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    sample_directory: '%kernel.project_dir%/web/audio/samples'
 
 framework:
     #esi: ~
@@ -70,16 +71,6 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
-
-vich_uploader:
-    db_driver: orm
-    mappings:
-        sample:
-            uri_prefix:         /audio/samples
-            upload_destination: '%kernel.project_dir%/web/audio/samples'
-            inject_on_load:     false
-            delete_on_update:   true
-            delete_on_remove:   true
 
 # Nelmio CORS
 nelmio_cors:
