@@ -6,8 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Vich\UploaderBundle\Entity\File as EmbeddedFile;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Class Sample
@@ -16,9 +14,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @ORM\Table(name="sample")
  * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks()
  */
 class Sample
 {
+    use EntityTimestampableTrait;
+
     /**
      * @var UuidInterface
      *
@@ -30,31 +31,23 @@ class Sample
     private $id;
 
     /**
-     * @var EmbeddedFile
+     * @var Sound
      *
-     * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
+     * @ORM\Embedded(class="AppBundle\Entity\Sound")
      */
     private $sound;
 
     /**
-     * @var UploadedFile
-     *
-     * @Vich\UploadableField(
-     *     mapping="sample",
-     *     fileNameProperty="sound.name",
-     *     mimeType="sound.mimeType",
-     *     originalName="sound.originalName",
-     *     size="sound.size"
-     * )
+     * @var UploadedFile|File
      */
     private $soundFile;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var string
      *
-     * @var \DateTime
+     * @ORM\Column(type="string", name="collection", options={"comment":"The collection which this sample is part of"})
      */
-    private $updatedAt;
+    private $collection;
 
     /**
      * Track constructor.
@@ -64,7 +57,9 @@ class Sample
     public function __construct(UuidInterface $id)
     {
         $this->id = $id;
-        $this->sound = new EmbeddedFile();
+        $this
+            ->setNewSound()
+            ->setNoCollection();
     }
 
     /**
@@ -76,46 +71,85 @@ class Sample
     }
 
     /**
-     * @return File|null
+     * @return UploadedFile|File|null
      */
-    public function getSoundFile(): File
+    public function getSoundFile()
     {
         return $this->soundFile;
     }
 
     /**
-     * @param null|File|UploadedFile $sound
+     * @param null|File|UploadedFile $soundFile
      *
      * @return Sample
      */
-    public function setSoundFile(?File $sound = null): Sample
+    public function setSoundFile($soundFile = null): Sample
     {
-        $this->soundFile = $sound;
+        $this->soundFile = $soundFile;
 
-        if ($sound) {
+        if ($soundFile) {
             // It is required otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTimeImmutable();
+            $this->setUpdatedAt(new \DateTimeImmutable());
         }
 
         return $this;
     }
 
     /**
-     * @return EmbeddedFile
+     * @return Sound
      */
-    public function getSound(): EmbeddedFile
+    public function getSound(): Sound
     {
         return $this->sound;
     }
 
     /**
-     * @param EmbeddedFile $sound
+     * @param Sound $sound
      *
      * @return Sample
      */
-    public function setSound(EmbeddedFile $sound): Sample
+    public function setSound(Sound $sound): Sample
     {
-        $this->sound = $sound;
+        $this->sound = Sound::createFromSound($sound);
+
+        return $this;
+    }
+
+    /**
+     * @return Sample
+     */
+    public function setNewSound(): Sample
+    {
+        $this->sound = Sound::create(null, null);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCollection(): string
+    {
+        return $this->collection;
+    }
+
+    /**
+     * @param string $collection
+     * @return Sample
+     */
+    public function setCollection(string $collection): Sample
+    {
+        $this->collection = $collection;
+
+        return $this;
+    }
+
+    /**
+     * @return Sample
+     */
+    public function setNoCollection(): Sample
+    {
+        $this->setCollection('');
 
         return $this;
     }

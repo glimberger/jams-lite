@@ -14,14 +14,14 @@ use Doctrine\ORM\Mapping as ORM;
 trait EntityTimestampableTrait
 {
     /**
-     * @var \DateTime
+     * @var null|\DateTimeInterface
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
-     * @var \DateTime
+     * @var null|\DateTimeInterface
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
@@ -32,8 +32,7 @@ trait EntityTimestampableTrait
      */
     public function setCreateValue(): void
     {
-        $this->setCreatedAt();
-        $this->setUpdatedAt();
+        $this->setCreatedAt(new \DateTimeImmutable());
     }
 
     /**
@@ -41,56 +40,45 @@ trait EntityTimestampableTrait
      */
     public function setUpdateValue(): void
     {
-        $this->setUpdatedAt();
+        $this->setUpdatedAt(new \DateTimeImmutable());
     }
 
     /**
-     * @return \DateTime
+     * @return null|\DateTimeInterface
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
     /**
-     * @param \DateTime $createdAt
+     * @param null|\DateTimeInterface $createdAt
      *
      * @return $this
      */
-    public function setCreatedAt(?\DateTime $createdAt = null)
+    public function setCreatedAt(?\DateTimeInterface $createdAt)
     {
-        if (null == $createdAt) {
-            $this->createdAt = new \DateTimeImmutable();
-        }
-        else {
-            $this->createdAt = $createdAt;
-        }
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return null|\DateTimeInterface
      */
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
     /**
-     * @param \DateTime $updatedAt
+     * @param null|\DateTimeInterface $updatedAt
      *
      * @return $this
      */
-    public function setUpdatedAt(?\DateTime $updatedAt = null)
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt)
     {
-        if (null == $updatedAt) {
-            $this->updatedAt = new \DateTimeImmutable();
-        }
-        else {
-            $this->updatedAt = $updatedAt;
-        }
-
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
