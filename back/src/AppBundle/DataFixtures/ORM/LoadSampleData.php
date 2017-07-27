@@ -6,6 +6,7 @@ namespace AppBundle\DataFixtures\ORM;
 use AppBundle\Entity\Sample;
 use AppBundle\Entity\Sound;
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -14,7 +15,7 @@ use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\CS\Finder;
 
-class LoadSampleData implements FixtureInterface, ContainerAwareInterface
+class LoadSampleData implements FixtureInterface, OrderedFixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -63,5 +64,15 @@ class LoadSampleData implements FixtureInterface, ContainerAwareInterface
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
+    }
+
+    /**
+     * Get the order of this fixture
+     *
+     * @return integer
+     */
+    public function getOrder()
+    {
+        return 10;
     }
 }
