@@ -112,19 +112,19 @@ class JamSession
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getTempo(): string
+    public function getTempo(): int
     {
         return $this->tempo;
     }
 
     /**
-     * @param string $tempo
+     * @param int $tempo
      *
      * @return JamSession
      */
-    public function setTempo(string $tempo): JamSession
+    public function setTempo(int $tempo): JamSession
     {
         $this->tempo = $tempo;
 
