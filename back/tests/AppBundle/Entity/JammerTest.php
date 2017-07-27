@@ -24,13 +24,6 @@ class JammerTest extends TestCase
         $this->jammer = new Jammer($this->uuid,'user@example.com', 'alias');
     }
 
-    public function testNullId()
-    {
-        $jammer = new Jammer(null, '', '');
-
-        $this->assertNull($jammer->getId());
-    }
-
     public function testGetId()
     {
         $this->assertEquals($this->uuid, $this->jammer->getId());
