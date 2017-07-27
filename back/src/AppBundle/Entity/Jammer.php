@@ -32,8 +32,6 @@ class Jammer implements AdvancedUserInterface
      *
      * @ORM\Id
      * @ORM\Column(type="uuid")
-     * @ORM\GeneratedValue(strategy="CUSTOM")
-     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      *
      * @Groups({"read"})
      */
@@ -130,11 +128,11 @@ class Jammer implements AdvancedUserInterface
     /**
      * Jammer constructor.
      *
-     * @param UuidInterface|null $id
+     * @param UuidInterface $id
      * @param string             $email
      * @param string             $alias
      */
-    public function __construct(?UuidInterface $id, string $email, string $alias)
+    public function __construct(UuidInterface $id, string $email, string $alias)
     {
         $this->id = $id;
         $this->setSalt($this->generateSalt());
@@ -148,9 +146,9 @@ class Jammer implements AdvancedUserInterface
     }
 
     /**
-     * @return null|UuidInterface
+     * @return UuidInterface
      */
-    public function getId(): ?UuidInterface
+    public function getId(): UuidInterface
     {
         return $this->id;
     }
