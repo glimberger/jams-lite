@@ -1,7 +1,7 @@
 <?php
+declare(strict_types = 1);
 
 namespace AppBundle\DataFixtures\ORM;
-
 
 use AppBundle\Entity\Sample;
 use AppBundle\Entity\Sound;
@@ -41,12 +41,14 @@ class LoadSampleData implements FixtureInterface, OrderedFixtureInterface, Conta
 
         /** @var SplFileInfo $info */
         foreach ($finder->in($fromDir) as $info) {
+            $sample = new Sample(Uuid::uuid4());
+
             $file = new File($info->getPathname());
             $originalName = $file->getFilename();
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $fileName = $sample->getId()->toString().'.'.$file->guessExtension();
             $file = $file->move($toDir, $fileName);
 
-            $sample = (new Sample(Uuid::uuid4()))
+            $sample
                 ->setSound(Sound::createFromFile($file, $originalName))
                 ->setCollection($collection);
 
